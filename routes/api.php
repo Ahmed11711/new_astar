@@ -1,6 +1,5 @@
 <?php
 
-use Termwind\Components\Raw;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckJwtToken;
 use App\Http\Controllers\Api\Auth\AuthController;
@@ -22,3 +21,5 @@ Route::prefix('v1/')->group(function () {
     });
       });
 });
+
+require __DIR__.'/admin.php';

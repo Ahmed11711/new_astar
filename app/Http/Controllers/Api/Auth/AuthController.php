@@ -150,6 +150,6 @@ class AuthController extends Controller
 
         // Here you would typically send the OTP via email or SMS
 
-        return $this->successResponse([], 'OTP resent successfully', 200);
+        return $this->successResponse([$otp], 'OTP resent successfully', 200);
     }
 }

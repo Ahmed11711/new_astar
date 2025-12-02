@@ -3,12 +3,6 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Services\InfoSyncService;
-use App\Services\ColumnSyncService;
-use Illuminate\Support\Facades\Log;
-use App\Services\ControllerGenerator;
-use App\Services\ModuleSeederService;
-use App\Services\RelationSyncService;
 use Illuminate\Support\Facades\Artisan;
 use App\Services\Command\ApiRouteService;
 use App\Services\Command\RequestGenerator;
