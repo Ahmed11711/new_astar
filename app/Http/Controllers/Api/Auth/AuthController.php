@@ -30,6 +30,8 @@ class AuthController extends Controller
                 return $this->errorResponse('Invalid credentials', 401);
             }
             $user = auth()->user();
+            $user->fcm_token = $request->fcm_token;
+            $user->save();
             $user->token = $token;
 
             $user->balance = UserBalance::where('user_id', $user->id)->value('balance') ?? 0;

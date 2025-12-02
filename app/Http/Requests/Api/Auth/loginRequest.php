@@ -13,6 +13,7 @@ class loginRequest extends BaseRequest
         return [
             'email' => 'required|email|exists:users,email',
             'password' => 'required|string|min:6',
+            'fcm_token' => 'nullable|string',
         ];
     }
 }
