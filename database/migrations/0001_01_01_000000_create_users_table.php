@@ -20,6 +20,10 @@ return new class extends Migration
             $table->string('affiliate_code')->unique();
             $table->string('otp', 6)->nullable();
             $table->boolean('is_verified')->default(false);
+            $table->string('phone')->nullable();
+            $table->string('profile_image')->nullable();
+            $table->string('address')->nullable();
+            $table->enum('role', ['admin', 'user'])->default('user');
             $table->rememberToken();
             $table->timestamps();
         });

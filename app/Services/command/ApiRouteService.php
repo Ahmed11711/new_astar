@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Command;
+namespace App\Services\command;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;

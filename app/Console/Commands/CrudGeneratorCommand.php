@@ -4,12 +4,13 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
-use App\Services\Command\ApiRouteService;
-use App\Services\Command\RequestGenerator;
-use App\Services\Command\ResourceGenerator;
-use App\Services\Command\ProviderBindService;
-use App\Services\Command\RepositoryGenerator;
-use App\Services\Command\ControllerGeneratorDRY;
+use App\Services\command\ApiRouteService;
+use App\Services\command\RequestGenerator;
+use App\Services\command\ResourceGenerator;
+use App\Services\command\ProviderBindService;
+use App\Services\command\RepositoryGenerator;
+use App\Services\command\ControllerGeneratorDRY;
+use Illuminate\Support\Facades\Log;
 
 class CrudGeneratorCommand extends Command
 {
@@ -21,6 +22,7 @@ protected $signature = 'crud:generate {model} ';
         {
                 // $module = $this->argument('module');
                 $model = $this->argument('model');
+                Log::info("Starting CRUD generation for model: {$model}");
                 // $seeder = $this->argument('seed') ?? 'True';
 
 
