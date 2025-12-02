@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Models\User;
 use App\Traits\OTPTrait;
+use App\Models\userBalance;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Traits\ApiResponseTrait;
@@ -12,14 +13,14 @@ use App\Http\Controllers\Controller;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Http\Requests\Api\Auth\loginRequest;
 use App\Http\Requests\Api\Auth\RegisterRequest;
-use App\Http\Requests\Api\Auth\UPdateProfileRequest;
+use App\Http\Requests\Api\Auth\resendOtpRequest;
 use App\Http\Requests\Api\Auth\VerifyEmailRequest;
+use App\Http\Requests\Api\Auth\UPdateProfileRequest;
 use App\Http\Requests\Api\Auth\VerifyAffiliateRequest;
-use App\Models\userBalance;
 
 class AuthController extends Controller
 {
-    use ApiResponseTrait,OTPTrait;
+    use ApiResponseTrait, OTPTrait;
 
     public function login(loginRequest $request)
     {
@@ -33,7 +34,7 @@ class AuthController extends Controller
 
             $user->balance = UserBalance::where('user_id', $user->id)->value('balance') ?? 0;
             return $this->successResponse([
-               'user'  => $user,
+                'user'  => $user,
             ], 'Login successful', 200);
         } catch (JWTException $e) {
             return $this->errorResponse('Could not create token', 500);
@@ -103,41 +104,52 @@ class AuthController extends Controller
         return $this->successResponse([], 'Email verified successfully', 200);
     }
 
-  public function verifyAffiliate(VerifyAffiliateRequest $request)
-{
-    $validatedData = $request->validated();
-    $code = $validatedData['affiliate_code'];
+    public function verifyAffiliate(VerifyAffiliateRequest $request)
+    {
+        $validatedData = $request->validated();
+        $code = $validatedData['affiliate_code'];
 
-    $affiliateUser = User::where('affiliate_code', $code)->first();
+        $affiliateUser = User::where('affiliate_code', $code)->first();
 
-    if (!$affiliateUser) {
-        return $this->errorResponse('Affiliate code is invalid', 404);
+        if (!$affiliateUser) {
+            return $this->errorResponse('Affiliate code is invalid', 404);
+        }
+
+        $balance = UserBalance::firstOrCreate(
+            ['user_id' => $affiliateUser->id],
+            ['balance' => 0,]
+        );
+
+        $balance->increment('balance', 10);
+
+        return $this->successResponse([], 'Affiliate code is valid, balance updated', 200);
     }
 
-     $balance = UserBalance::firstOrCreate(
-        ['user_id' => $affiliateUser->id],
-        ['balance' => 0, ]
-    );
-
-     $balance->increment('balance', 10);
-
-    return $this->successResponse([], 'Affiliate code is valid, balance updated', 200);
-}
-
-public function updateProfile(UPdateProfileRequest $request)
-{
-    $user = auth()->user();
+    public function updateProfile(UPdateProfileRequest $request)
+    {
+        $user = auth()->user();
 
         $validatedData = $request->validated();
 
-    if (isset($validatedData['password'])) {
-        $validatedData['password'] = bcrypt($validatedData['password']);
-    }
+        if (isset($validatedData['password'])) {
+            $validatedData['password'] = bcrypt($validatedData['password']);
+        }
 
-    $user->update($validatedData);
+        $user->update($validatedData);
         return $this->successResponse([
             'user' => $user,
         ], 'Profile updated successfully', 200);
+    }
 
+    public function resendOtp(resendOtpRequest $request)
+    {
+        $user = User::where('email', $request->email)->first();
+
+        $otp = $this->generateOtp(6);
+        $user->update(['otp' => $otp]);
+
+        // Here you would typically send the OTP via email or SMS
+
+        return $this->successResponse([], 'OTP resent successfully', 200);
     }
 }
