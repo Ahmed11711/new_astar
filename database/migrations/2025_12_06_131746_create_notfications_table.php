@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_balances', function (Blueprint $table) {
+        Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->decimal('balance', 15, 2)->default(0);
-            $table->decimal('affiliate_balance', 15, 2)->default(0);
-            $table->boolean('is_active')->default(true);
+            $table->integer('user_id');
+            $table->string('title');
+            $table->text('message');
+            $table->boolean('is_read')->default(false);
+            
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_balances');
+        Schema::dropIfExists('notfications');
     }
 };

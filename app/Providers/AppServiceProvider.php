@@ -2,6 +2,12 @@
 
 namespace App\Providers;
 
+use App\Repositories\notifications\notificationsRepositoryInterface;
+use App\Repositories\notifications\notificationsRepository;
+
+use App\Repositories\withdraw\withdrawRepositoryInterface;
+use App\Repositories\withdraw\withdrawRepository;
+
 use App\Repositories\User\UserRepositoryInterface;
 use App\Repositories\User\UserRepository;
 
@@ -15,6 +21,8 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void {
 //
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+        $this->app->bind(withdrawRepositoryInterface::class, withdrawRepository::class);
+        $this->app->bind(notificationsRepositoryInterface::class, notificationsRepository::class);
 }
 
     /**

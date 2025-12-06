@@ -4,10 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class userBalance extends Model
+class withdraw extends Model
 {
-    protected $table = 'user_balances';
-    protected $guarded = [] ;
+     protected $guarded = [] ;
 
     public function user()
     {
