@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckJwtToken;
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\Company\CompanyCOntroller;
 use App\Http\Controllers\Api\Withdraw\WithdrawController;
 use App\Http\Controllers\Api\Affiliate\AffiliateController;
 use App\Http\Controllers\Api\Notifications\NotificationsController;
@@ -32,6 +33,7 @@ Route::prefix('v1/')->group(function () {
 
         Route::post('withdraw', [WithdrawController::class, 'Withdraw']);
         Route::post('add-balance', [WithdrawController::class, 'addBalance']);
+        Route::get('company',[CompanyCOntroller::class,'index']);
    });
 });
 
