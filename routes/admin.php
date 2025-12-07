@@ -8,7 +8,7 @@ use App\Http\Controllers\Admin\withdraw\withdrawController;
 use App\Http\Middleware\CheckJwtTokenByAdmin;
 use App\Http\Controllers\Admin\Auth\AuthController;
 use App\Http\Controllers\Admin\User\UserController;
-
+use App\Models\User;
 
 Route::post('admin/v1/login', [AuthController::class, 'login'])->name('admin.login');
 Route::prefix('admin/v1')->middleware(CheckJwtTokenByAdmin::class)->group(function () {
@@ -18,6 +18,9 @@ Route::prefix('admin/v1')->middleware(CheckJwtTokenByAdmin::class)->group(functi
     Route::get('my-affiliate', [AuthController::class, 'myAffiliate']);
     Route::apiResource('companies', CompanyController::class)->names('company');
     Route::apiResource('settings', settingController::class)->names('setting');
+    Route::get('all-emails',function(){
+        return User::select(['id','email'])->get();
+    });
 
 
 });
