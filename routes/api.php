@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckJwtToken;
 use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\Api\HelperForFront\ApiHelperFrontController;
 
 
 Route::prefix('v1/')->group(function () {
@@ -23,6 +24,11 @@ Route::prefix('v1/')->group(function () {
     return response()->json([
       'output' => Artisan::output(),
     ]);
+  });
+
+
+  Route::prefix('global', function () {
+    Route::get('grades' . [ApiHelperFrontController::class, 'getGrades']);
   });
 });
 
