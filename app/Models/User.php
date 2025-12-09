@@ -20,19 +20,15 @@ class User extends Authenticatable implements JWTSubject
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'username',
+        'first_name',
+        'last_name',
         'email',
-        'password',
-        'affiliate_code',
-        'otp',
-        'is_verified',
         'phone',
-        'profile_image',
-        'address',
+        'is_email_verified',
+        'student_type',
         'role',
-        'fcm_token',
-        'referred_by',
-        
+        'is_active',
     ];
     /**
      * The attributes that should be hidden for serialization.
@@ -68,8 +64,7 @@ class User extends Authenticatable implements JWTSubject
     }
 
     public function balance()
-{
-    return $this->hasOne(UserBalance::class, 'user_id');
-}
-
+    {
+        return $this->hasOne(UserBalance::class, 'user_id');
+    }
 }
