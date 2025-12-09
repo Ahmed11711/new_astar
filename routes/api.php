@@ -26,11 +26,12 @@ Route::prefix('v1/')->group(function () {
     ]);
   });
 
-  Route::get('test', function () {
-    return 555;
-  });
 
-  Route::prefix('global')->group(function () {
+
+  Route::prefix('global/')->group(function () {
+    Route::get('test', function () {
+      return 555;
+    });
     Route::get('grades', [ApiHelperFrontController::class, 'getGrades']);
   });
 });
