@@ -65,6 +65,6 @@ class User extends Authenticatable implements JWTSubject
 
     public function scopeTeachersAndStudents($query)
     {
-        return $query->whereIn('role', ['teacher', 'student']);
+        return $query->whereIn('role', ['school', 'teacher']);
     }
 }
