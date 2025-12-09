@@ -15,7 +15,7 @@ class SubjectStoreRequest extends BaseRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'grades_id' => 'required|integer|exists:grades,id',
+            'grade_id' => 'required|integer|exists:grades,id',
         ];
     }
 }

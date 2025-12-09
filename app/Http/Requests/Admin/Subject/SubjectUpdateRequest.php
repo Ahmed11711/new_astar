@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Requests\Admin\Subject;
+
 use App\Http\Requests\BaseRequest\BaseRequest;
+
 class SubjectUpdateRequest extends BaseRequest
 {
     public function authorize(): bool
@@ -13,7 +15,7 @@ class SubjectUpdateRequest extends BaseRequest
     {
         return [
             'name' => 'sometimes|required|string|max:255',
-            'grades_id' => 'sometimes|required|integer|exists:grades,id',
+            'grade_id' => 'sometimes|required|integer|exists:grades,id',
         ];
     }
 }
