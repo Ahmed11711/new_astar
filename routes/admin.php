@@ -17,7 +17,7 @@ use App\Http\Controllers\Admin\Auth\AuthController;
 use App\Http\Controllers\Admin\User\UserController;
 use App\Models\User;
 
-Route::prefix('admin/v1')->middleware(CheckJwtTokenByAdmin::class)->group(function () {});
+// Route::prefix('admin/v1')->middleware(CheckJwtTokenByAdmin::class)->group(function () {});
 
 
 Route::prefix('v1')->group(function () {
