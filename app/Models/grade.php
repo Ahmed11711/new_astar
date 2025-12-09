@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class grade extends Model
 {
 
-    public function subject()
+    public function subjects()
     {
-        return $this->belongsTo(Subject::class);
+        return $this->hasMany(Subject::class, 'grade_id');
     }
 }
