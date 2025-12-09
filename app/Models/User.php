@@ -63,8 +63,8 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-    public function balance()
+    public function scopeTeachersAndStudents($query)
     {
-        return $this->hasOne(UserBalance::class, 'user_id');
+        return $query->whereIn('role', ['teacher', 'student']);
     }
 }
