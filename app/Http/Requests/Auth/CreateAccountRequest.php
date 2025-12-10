@@ -33,6 +33,13 @@ class CreateAccountRequest extends BaseRequest
      $query->where('role', 'school');
     }),
    ],
+
+   'subject_ids' => [
+    'sometimes',
+    'array',
+    Rule::requiredIf(fn() => $this->role === 'student'),
+   ],
+   'subject_ids.*' => ['integer', 'exists:subjects,id'],
   ];
  }
 
