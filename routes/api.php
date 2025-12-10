@@ -1,12 +1,27 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\HelperForFront\ApiHelperFrontController;
+use App\Http\Controllers\Auth\CreateAccountController;
 use App\Http\Middleware\CheckJwtToken;
 use Illuminate\Support\Facades\Artisan;
-use App\Http\Controllers\Api\HelperForFront\ApiHelperFrontController;
+use Illuminate\Support\Facades\Route;
+
 
 
 Route::prefix('v1/')->group(function () {
+
+ Route::prefix('Auth/')->group(function () {
+
+  Route::post('create-account', [CreateAccountController::class, 'createAccount']);
+ });
+
+
+
+
+
+
+
+
 
  Route::get('run-migrate', function () {
   Artisan::call('migrate', ['--force' => true]);
@@ -18,6 +33,10 @@ Route::prefix('v1/')->group(function () {
 
  Route::get('run-migrate-refresh', function () {
   Artisan::call('migrate:refresh', [
+   '--force' => true,
+  ]);
+
+  Artisan::call('db:seed', [
    '--force' => true,
   ]);
 
