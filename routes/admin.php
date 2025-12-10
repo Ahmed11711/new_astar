@@ -25,14 +25,14 @@ use App\Models\User;
 
 Route::prefix('v1')->group(function () {
 
-    Route::apiResource('schools', schoolController::class)->names('school');
-    Route::apiResource('grades', gradeController::class)->names('grade');
-    Route::apiResource('subjects', SubjectController::class)->names('subject');
-    Route::apiResource('topics', TopicController::class)->names('topic');
-    Route::apiResource('subtopics', SubtopicController::class)->names('subtopic');
-    Route::apiResource('teams', TeamController::class)->names('team');
-    Route::apiResource('blogs', BlogController::class)->names('blog');
-    Route::apiResource('student_registrations', StudentRegistrationsController::class)->names('student_registrations');
-    Route::apiResource('trusteds', trustedController::class)->names('trusted');
-    Route::apiResource('success_stories', successStoriesController::class)->names('success_stories');
+ Route::apiResource('schools', schoolController::class)->names('school');
+ Route::apiResource('grades', gradeController::class)->names('grade');
+ Route::apiResource('subjects', SubjectController::class)->names('subject');
+ Route::apiResource('topics', TopicController::class)->names('topic');
+ Route::apiResource('subtopics', SubtopicController::class)->names('subtopic');
+ Route::apiResource('teams', TeamController::class)->names('team');
+ Route::apiResource('blogs', BlogController::class)->names('blog');
+ Route::apiResource('student_registrations', StudentRegistrationsController::class)->names('student_registrations');
+ Route::apiResource('trusteds', trustedController::class)->names('trusted');
+ Route::apiResource('success-stories', successStoriesController::class)->names('success_stories');
 });
