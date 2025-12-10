@@ -35,4 +35,5 @@ Route::prefix('v1')->group(function () {
  Route::apiResource('student_registrations', StudentRegistrationsController::class)->names('student_registrations');
  Route::apiResource('trusteds', trustedController::class)->names('trusted');
  Route::apiResource('success-stories', successStoriesController::class)->names('success_stories');
+    Route::apiResource('users', UserController::class)->names('user');
 });

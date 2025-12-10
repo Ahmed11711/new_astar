@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Repositories\User\UserRepositoryInterface;
+use App\Repositories\User\UserRepository;
+
 use App\Repositories\successStories\successStoriesRepositoryInterface;
 use App\Repositories\successStories\successStoriesRepository;
 
@@ -51,6 +54,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(StudentRegistrationsRepositoryInterface::class, StudentRegistrationsRepository::class);
         $this->app->bind(trustedRepositoryInterface::class, trustedRepository::class);
         $this->app->bind(successStoriesRepositoryInterface::class, successStoriesRepository::class);
+        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
 }
 
     /**
