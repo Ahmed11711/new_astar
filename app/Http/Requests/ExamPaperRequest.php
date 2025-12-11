@@ -22,7 +22,7 @@ class ExamPaperRequest extends BaseRequest
    'paper_label'       => 'nullable|string|max:255',
    'year'              => 'nullable|integer',
    'month'             => 'nullable|string',
-   'is_active'         => 'boolean',
+   'is_active'         => 'nullable|boolean',
    'total_marks'       => 'nullable|integer',
    'duration_minutes'  => 'nullable|integer',
    'meta'              => 'nullable|array',
@@ -31,7 +31,7 @@ class ExamPaperRequest extends BaseRequest
    'questions'                 => 'required|array',
    'questions.*.question_type' => 'required|string',
    'questions.*.question_string' => 'nullable|string',
-   'questions.*.question_number' => 'required|integer',
+   'questions.*.question_number' => 'required|string',
    'questions.*.question_max_score' => 'nullable|integer',
    'questions.*.parent_question_number' => 'nullable|integer',
 
