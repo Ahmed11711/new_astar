@@ -11,15 +11,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1/')->group(function () {
 
- Route::prefix('Auth/')->group(function () {
-
-  Route::post('create-account', [CreateAccountController::class, 'createAccount']);
- });
-
  Route::prefix('auth/')->group(function () {
 
+  Route::post('create-account', [CreateAccountController::class, 'createAccount']);
   Route::post('login', [LoginController::class, 'login']);
  });
+
 
 
 
