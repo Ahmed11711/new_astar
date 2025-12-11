@@ -33,7 +33,7 @@ class ExamPaperRequest extends BaseRequest
    'questions.*.question_string' => 'nullable|string',
    'questions.*.question_number' => 'required|string',
    'questions.*.question_max_score' => 'nullable|integer',
-   'questions.*.parent_question_number' => 'nullable|integer',
+   'questions.*.parent_question_number' => 'nullable|string',
 
    // الخيارات
    'questions.*.options'                  => 'array',
