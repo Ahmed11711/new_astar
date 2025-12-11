@@ -12,4 +12,9 @@ class ExamPaper extends Model
   'is_active' => 'boolean',
   'meta'      => 'array',
  ];
+
+ public function questions()
+ {
+  return $this->hasMany(Question::class, 'exam_paper_id');
+ }
 }
