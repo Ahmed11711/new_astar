@@ -24,7 +24,7 @@ Route::prefix('v1/')->group(function () {
 
 
  Route::get('run-migrate', function () {
-  Artisan::call('migrate:fresh', ['--force' => true]);
+  Artisan::call('migrate', ['--force' => true]);
 
   return response()->json([
    'code' => Artisan::output()
