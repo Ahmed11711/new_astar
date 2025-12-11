@@ -40,16 +40,13 @@ class PackagesStoreRequest extends BaseRequest
    ],
 
    'assignable_id' => [
-    // required إذا كان School أو Teacher
     Rule::requiredIf(fn() => in_array($this->assign_type, [
      AssignTypeEnum::SCHOOL->value,
      AssignTypeEnum::TEACHER->value,
     ])),
 
-    // exclude إذا كان System
     Rule::excludeIf(fn() => $this->assign_type === AssignTypeEnum::SYSTEM->value),
 
-    // يجب أن يكون موجود في users table
     Rule::exists('users', 'id'),
    ],
   ];
