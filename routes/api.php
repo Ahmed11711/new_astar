@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\HelperForFront\ApiHelperFrontController;
 use App\Http\Controllers\Auth\CreateAccountController;
 use App\Http\Middleware\CheckJwtToken;
@@ -13,6 +14,11 @@ Route::prefix('v1/')->group(function () {
  Route::prefix('Auth/')->group(function () {
 
   Route::post('create-account', [CreateAccountController::class, 'createAccount']);
+ });
+
+ Route::prefix('auth/')->group(function () {
+
+  Route::post('login', [LoginController::class, 'login']);
  });
 
 
