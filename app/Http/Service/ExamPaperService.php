@@ -46,8 +46,8 @@ class ExamPaperService
 
    $question = Question::create([
     'exam_paper_id'      => $paperId,
-    'subject_id'         => $subjectId,      // ثابت من الـ paper
-    'topic_id'           => $topicId,        // ثابت من الفرونت
+    'subject_id'         => $q['subject_id'],      // ثابت من الـ paper
+    'topic_id'           => $q['topic_id'],        // ثابت من الفرونت
     'question_type'      => $q['question_type'],
     'question_string'    => $q['question_string'] ?? null,
     'question_number'    => $q['question_number'],
