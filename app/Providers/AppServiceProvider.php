@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Repositories\Packages\PackagesRepositoryInterface;
+use App\Repositories\Packages\PackagesRepository;
+
 use App\Repositories\FeaturePackage\FeaturePackageRepositoryInterface;
 use App\Repositories\FeaturePackage\FeaturePackageRepository;
 
@@ -69,6 +72,7 @@ class AppServiceProvider extends ServiceProvider
   $this->app->bind(paperRepositoryInterface::class, paperRepository::class);
   $this->app->bind(FeatureRepositoryInterface::class, FeatureRepository::class);
         $this->app->bind(FeaturePackageRepositoryInterface::class, FeaturePackageRepository::class);
+        $this->app->bind(PackagesRepositoryInterface::class, PackagesRepository::class);
 }
 
  /**
