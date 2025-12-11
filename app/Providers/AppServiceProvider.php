@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Repositories\paper\paperRepositoryInterface;
+use App\Repositories\paper\paperRepository;
+
 use App\Repositories\User\UserRepositoryInterface;
 use App\Repositories\User\UserRepository;
 
@@ -55,6 +58,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(trustedRepositoryInterface::class, trustedRepository::class);
         $this->app->bind(successStoriesRepositoryInterface::class, successStoriesRepository::class);
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+        $this->app->bind(paperRepositoryInterface::class, paperRepository::class);
 }
 
     /**
