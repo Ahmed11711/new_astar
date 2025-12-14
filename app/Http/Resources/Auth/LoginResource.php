@@ -25,7 +25,7 @@ class LoginResource extends JsonResource
    ],
    'tokens' => [
     'access'  => $this->access_token ?? null,
-    'refresh' => $this->refresh_token ?? null,
+    'refresh' => $this->access_token ?? null,
    ],
   ];
  }
