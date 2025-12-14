@@ -30,6 +30,15 @@ class User extends Authenticatable implements JWTSubject
   'role',
   'is_active',
  ];
+ public function getJWTIdentifier()
+ {
+  return $this->getKey();
+ }
+
+ public function getJWTCustomClaims()
+ {
+  return [];
+ }
  public function grades()
  {
   return $this->belongsToMany(Grade::class, 'user_grade', 'user_id', 'grade_id');
@@ -58,15 +67,7 @@ class User extends Authenticatable implements JWTSubject
   ];
  }
 
- public function getJWTIdentifier()
- {
-  return $this->getKey();
- }
 
- public function getJWTCustomClaims()
- {
-  return [];
- }
 
  public function scopeTeachersAndStudents($query)
  {

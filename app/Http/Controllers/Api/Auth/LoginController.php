@@ -3,19 +3,18 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
-use App\Http\Resources\Auth\LoginResource;
 use App\Models\User;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Traits\ApiResponseTrait;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
-use Tymon\JWTAuth\Exceptions\JWTException;
-use Tymon\JWTAuth\Facades\JWTAuth;
+
+
 
 
 class LoginController extends Controller
 {
+
  use ApiResponseTrait;
 
  public function login(Request $request)
@@ -26,8 +25,6 @@ class LoginController extends Controller
    if (! $token = JWTAuth::attempt($credentials)) {
     return response()->json(['error' => 'Invalid credentials'], 401);
    }
-
-   return $token;
 
    // Get the authenticated user.
    $user = auth()->user();
