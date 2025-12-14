@@ -45,6 +45,6 @@ Route::prefix('v1')->group(function () {
  Route::post('exam', [exampleController::class, 'store']);
  Route::apiResource('papers', paperController::class)->names('paper');
  Route::apiResource('features', FeatureController::class)->names('feature');
-    Route::apiResource('feature_packages', FeaturePackageController::class)->names('feature_package');
-    Route::apiResource('packages', PackagesController::class)->names('packages');
+ Route::apiResource('feature_packages', FeaturePackageController::class)->names('feature_package');
+ Route::apiResource('packages', PackagesController::class)->names('packages');
 });

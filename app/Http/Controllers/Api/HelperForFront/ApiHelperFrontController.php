@@ -13,7 +13,10 @@ class ApiHelperFrontController extends Controller
  use ApiResponseTrait;
  public function getGrades(Request $request)
  {
-  $grades = Grade::with('subjects:id,name,grade_id')->get();
+  $grades = Grade::with([
+   'subjects:id,name,grade_id',
+   'subjects.topics:id,name,subject_id'
+  ])->get();
   return $this->successResponse($grades, "Grades with Subjects");
  }
 

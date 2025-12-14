@@ -27,7 +27,6 @@ class ExamPaperService
     'meta'             => $data['meta'] ?? [],
    ]);
 
-   // نمرر subject_id و topic للكل
    $this->insertQuestions(
     $paper->id,
     $data['questions'],
@@ -46,8 +45,8 @@ class ExamPaperService
 
    $question = Question::create([
     'exam_paper_id'      => $paperId,
-    'subject_id'         => $subjectId,      // ثابت من الـ paper
-    'topic_id'           => $topicId,        // ثابت من الفرونت
+    'subject_id'         => $subjectId,
+    'topic_id'           => $topicId,
     'question_type'      => $q['question_type'],
     'question_string'    => $q['question_string'] ?? null,
     'question_number'    => $q['question_number'],

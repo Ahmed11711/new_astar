@@ -4,9 +4,6 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Auth\LoginResource;
-use App\Models\User;
-use Tymon\JWTAuth\Facades\JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Traits\ApiResponseTrait;
 use Illuminate\Http\Request;
 

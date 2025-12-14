@@ -16,31 +16,33 @@ Route::prefix('v1/')->group(function () {
   Route::post('login', [LoginController::class, 'login']);
  });
 
- // Route::get('run-migrate', function () {
- //  Artisan::call('migrate', ['--force' => true]);
 
- //  return response()->json([
- //   'code' => Artisan::output()
- //  ]);
- // });
-
- // Route::get('run-migrate-refresh', function () {
- //  // Artisan::call('migrate:refresh', [
- //  //  '--force' => true,
- //  // ]);
-
- //  Artisan::call('db:seed', [
- //   '--force' => true,
- //  ]);
-
- //  return response()->json([
- //   'output' => Artisan::output(),
- //  ]);
- // });
  Route::prefix('global/')->group(function () {
   Route::get('grades', [ApiHelperFrontController::class, 'getGrades']);
   Route::get('all-school-teacher', [ApiHelperFrontController::class, 'allTeacherAndSchool']);
  });
 });
 
+
+// Route::get('run-migrate', function () {
+//  Artisan::call('migrate', ['--force' => true]);
+
+//  return response()->json([
+//   'code' => Artisan::output()
+//  ]);
+// });
+
+// Route::get('run-migrate-refresh', function () {
+//  // Artisan::call('migrate:refresh', [
+//  //  '--force' => true,
+//  // ]);
+
+//  Artisan::call('db:seed', [
+//   '--force' => true,
+//  ]);
+
+//  return response()->json([
+//   'output' => Artisan::output(),
+//  ]);
+// });
 require __DIR__ . '/admin.php';
