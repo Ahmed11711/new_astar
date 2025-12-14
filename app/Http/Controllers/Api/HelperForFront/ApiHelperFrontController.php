@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Api\HelperForFront;
 
-use App\Models\User;
-use App\Models\grade;
-use Illuminate\Http\Request;
-use App\Traits\ApiResponseTrait;
 use App\Http\Controllers\Controller;
+use App\Http\Service\HelperService\UserRoleService;
+use App\Models\grade;
+use App\Models\User;
+use App\Traits\ApiResponseTrait;
+use Illuminate\Http\Request;
 
 class ApiHelperFrontController extends Controller
 {
@@ -20,19 +21,25 @@ class ApiHelperFrontController extends Controller
   return $this->successResponse($grades, "Grades with Subjects");
  }
 
- public function allTeacherAndSchool()
+ public function allTeacherAndSchool(Request $request, UserRoleService $service)
  {
-  $teachers = User::where('role', 'teacher')
-   ->select('id', 'username', 'email', 'role')
-   ->get();
+  $result = $service->getTeachersAndSchools($request->id);
 
-  $schools = User::where('role', 'school')
-   ->select('id', 'username', 'email', 'role')
-   ->get();
+  if ($request->filled('id')) {
+   if (!$result) {
+    return $this->errorResponse('User not found', 404);
+   }
+
+   return $this->successResponse($result, 'User retrieved successfully');
+  }
 
   return $this->successResponse([
-   'teachers' => $teachers,
-   'schools'  => $schools,
-  ], 'Teachers and Schools');
+   'teachers' => $result->get('teacher', []),
+   'schools'  => $result->get('school', []),
+  ], 'Teachers and Schools retrieved successfully');
  }
+
+
+
+ public function getPackageByAccount(Request $request) {}
 }

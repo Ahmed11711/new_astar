@@ -67,6 +67,8 @@ class User extends Authenticatable implements JWTSubject
   ];
  }
 
+ // relation for get package schools
+
 
 
  public function scopeTeachersAndStudents($query)
