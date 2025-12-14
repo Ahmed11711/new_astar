@@ -20,11 +20,12 @@ use App\Http\Controllers\exampleController;
 use App\Http\Middleware\CheckJwtTokenByAdmin;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\ExamPaper\ExamPaperController;
 use App\Http\Controllers\Admin\Packages\PackagesController;
 use App\Http\Controllers\Admin\FeaturePackage\FeaturePackageController;
 use App\Http\Controllers\Admin\Feature\FeatureController;
 use App\Http\Controllers\Admin\paper\paperController;
-
+use App\Http\Controllers\DataEntry\DataEntryController;
 
 // Route::prefix('admin/v1')->middleware(CheckJwtTokenByAdmin::class)->group(function () {});
 
@@ -42,9 +43,11 @@ Route::prefix('v1')->group(function () {
  Route::apiResource('trusteds', trustedController::class)->names('trusted');
  Route::apiResource('success-stories', successStoriesController::class)->names('success_stories');
  Route::apiResource('users', UserController::class)->names('user');
- Route::post('exam', [exampleController::class, 'store']);
+ Route::post('exam', [DataEntryController::class, 'store']);
+ // Route::get('examss', [DataEntryController::class, 'index']);
  Route::apiResource('papers', paperController::class)->names('paper');
  Route::apiResource('features', FeatureController::class)->names('feature');
  Route::apiResource('feature_packages', FeaturePackageController::class)->names('feature_package');
  Route::apiResource('packages', PackagesController::class)->names('packages');
+ Route::apiResource('exams', ExamPaperController::class)->names('exam_paper');
 });
