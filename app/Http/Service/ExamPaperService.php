@@ -11,8 +11,8 @@ class ExamPaperService
 {
  public function createExamPaperWithQuestions($data)
  {
+  // return $data;
   return DB::transaction(function () use ($data) {
-
    $paper = ExamPaper::create([
     'subject_id'       => $data['subject_id'],
     'grade_id'         => $data['grade_id'],
@@ -46,7 +46,8 @@ class ExamPaperService
    $question = Question::create([
     'exam_paper_id'      => $paperId,
     'subject_id'         => $subjectId,
-    'topic_id'           => $topicId,
+    'topic_id'           => $q['topic_id'],
+    'subtopics_id'       => $q['subtopics_id'],
     'question_type'      => $q['question_type'],
     'question_string'    => $q['question_string'] ?? null,
     'question_number'    => $q['question_number'],

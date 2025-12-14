@@ -10,17 +10,17 @@ use App\Http\Resources\Admin\ExamPaper\ExamPaperResource;
 
 class ExamPaperController extends BaseController
 {
-    public function __construct(ExamPaperRepositoryInterface $repository)
-    {
-        parent::__construct();
+ public function __construct(ExamPaperRepositoryInterface $repository)
+ {
+  parent::__construct();
 
-        $this->initService(
-            repository: $repository,
-            collectionName: 'ExamPaper'
-        );
+  $this->initService(
+   repository: $repository,
+   collectionName: 'ExamPaper'
+  );
 
-        $this->storeRequestClass = ExamPaperStoreRequest::class;
-        $this->updateRequestClass = ExamPaperUpdateRequest::class;
-        $this->resourceClass = ExamPaperResource::class;
-    }
+  $this->storeRequestClass = ExamPaperStoreRequest::class;
+  $this->updateRequestClass = ExamPaperUpdateRequest::class;
+  $this->resourceClass = ExamPaperResource::class;
+ }
 }
