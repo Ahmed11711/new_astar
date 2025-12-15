@@ -22,10 +22,6 @@ Route::prefix('v1/')->group(function () {
  });
 });
 
-Route::get('tests-serversss',function(){
-    return "done";
-});
-
 
 // Route::get('run-migrate', function () {
 //  Artisan::call('migrate', ['--force' => true]);
