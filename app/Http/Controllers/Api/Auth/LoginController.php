@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Auth\LoginResource;
 use App\Traits\ApiResponseTrait;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 
@@ -22,17 +23,20 @@ class LoginController extends Controller
  {
   $credentials = $request->only('email', 'password');
 
-  if (! $token = JWTAuth::attempt($credentials)) {
-   return $this->errorResponse('Invalid credentials', 401);
+  try {
+   if (! $token = JWTAuth::attempt($credentials)) {
+    return response()->json(['error' => 'Invalid credentials'], 401);
+   }
+
+   // Get the authenticated user.
+   $user = auth()->user();
+
+   // (optional) Attach the role to the token.
+   $token = JWTAuth::claims(['role' => $user->role])->fromUser($user);
+
+   return response()->json(compact('token'));
+  } catch (JWTException $e) {
+   return response()->json(['error' => 'Could not create token'], 500);
   }
-
-  $user = JWTAuth::user();
-  $user->access_token = $token;
-  $user->refresh_token = null;
-
-  return $this->successResponse(
-   new LoginResource($user),
-   'Login Successfully'
-  );
  }
 }
