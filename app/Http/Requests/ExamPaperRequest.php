@@ -20,9 +20,10 @@ class ExamPaperRequest extends BaseRequest
    'grade_id'          => 'required|exists:grades,id',
    'title'             => 'required|string|max:255',
    'paper_label'       => 'nullable|string|max:255',
+//    'paper_id'          =>'required|exists:table,column',
    'year'              => 'nullable|integer',
    'month'             => 'nullable|string',
-   'is_active'         => 'nullable|boolean',
+  //  'is_active'         => 'nullable|boolean',
    'total_marks'       => 'nullable|integer',
    'duration_minutes'  => 'nullable|integer',
    'meta'              => 'nullable|array',
@@ -35,7 +36,7 @@ class ExamPaperRequest extends BaseRequest
    'questions.*.question_max_score' => 'nullable|integer',
    'questions.*.parent_question_number' => 'nullable|string',
    'questions.*.topic_id' => 'required|integer|exists:topics,id',
-   'questions.*.subtopics_id' => 'nullable|integer|exists:subtopics,id',
+   'questions.*.subtopics_id' => 'required|integer|exists:subtopics,id',
 
    // الخيارات
    'questions.*.options'                  => 'array',

@@ -31,9 +31,10 @@ class CreateAccountRequest extends BaseRequest
    'school_id' => [
     Rule::requiredIf(fn() => $this->role === 'student'),
     Rule::exists('users', 'id')->where(function ($query) {
-     $query->where('role', 'school');
+        $query->where('role', '!=', 'student');
     }),
-   ],
+],
+
 
    'subject_ids' => [
     'sometimes',
