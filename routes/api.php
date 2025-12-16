@@ -30,6 +30,15 @@ Route::prefix('v1/')->group(function () {
 //   'code' => Artisan::output()
 //  ]);
 // });
+Route::get('/generate-jwt-secret', function () {
+ // ينفذ الأمر
+ Artisan::call('jwt:secret');
+
+ return response()->json([
+  'status' => 'success',
+  'output' => Artisan::output(),
+ ]);
+});
 
 // Route::get('run-migrate-refresh', function () {
 //  // Artisan::call('migrate:refresh', [
