@@ -36,7 +36,6 @@ class LoginController extends Controller
    $user->access_token = $token;
    $user->refresh_token = null;
 
-   return     new LoginResource($user);
 
    // return response()->json(compact('token'));
    return $this->successResponse(

@@ -5,7 +5,7 @@ return [
  'paths' => ['api/*', '*'],
 
  'allowed_methods' => ['*'],
- 'allowed_origins' => ['http://localhost:3000'],
+ 'allowed_origins' => ['http://localhost:3000', 'http://astar.click/'],
  'allowed_origins_patterns' => [],
 
 

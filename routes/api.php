@@ -56,3 +56,4 @@ Route::get('/generate-jwt-secret', function () {
 //  ]);
 // });
 require __DIR__ . '/admin.php';
+require __DIR__ . '/student.php';
