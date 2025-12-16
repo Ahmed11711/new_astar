@@ -32,7 +32,9 @@ Route::prefix('v1/')->group(function () {
 // });
 Route::get('/generate-jwt-secret', function () {
  // ينفذ الأمر
- Artisan::call('jwt:secret');
+ // Artisan::call('jwt:secret');
+ Artisan::call('jwt:secret', ['--force' => true]);
+
 
  return response()->json([
   'status' => 'success',
