@@ -50,7 +50,10 @@ class LoginController extends Controller
 
     public function me(Request $request)
     {
-        $user = auht('api')->user();
-        return new MeResource($user);
+        $user = auth('api')->user();
+
+        return new MeResource(
+            $user->load(['profile', 'subscription'])
+        );
     }
 }
