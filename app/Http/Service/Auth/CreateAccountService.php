@@ -7,7 +7,6 @@ use App\Models\User;
 use App\Models\StudentAssignment;
 use App\Models\StudentPackage;
 use App\Models\UserGrade;
-use App\Models\UserPackage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -33,12 +32,7 @@ class CreateAccountService
                 'password'     => Hash::make($data['password']),
             ]);
 
-            // ======================
-            // Stop here if not student
-            // ======================
-            if ($user->role !== 'student') {
-                return $user;
-            }
+            if ($user->role !== 'student') return $user;
 
             // ======================
             // Student related data
@@ -51,30 +45,20 @@ class CreateAccountService
         });
     }
 
-    /**
-     * Assign student to school or teacher
-     */
     protected function assignStudent(User $user, array $data): void
     {
-        if (!isset($data['assigned_id'], $data['assigned_type'])) {
-            return;
-        }
+        if (!isset($data['school_id'], $data['directorate_affiliation'])) return;
 
         StudentAssignment::create([
             'student_id'    => $user->id,
-            'assigned_type' => $data['assigned_type'],
-            'assigned_id'   => $data['assigned_id'],
+            'assigned_type' => $data['directorate_affiliation'],
+            'assigned_id'   => $data['school_id'],
         ]);
     }
 
-    /**
-     * Assign grade
-     */
     protected function assignGrade(User $user, array $data): void
     {
-        if (!isset($data['grade_id'])) {
-            return;
-        }
+        if (!isset($data['grade_id'])) return;
 
         UserGrade::create([
             'user_id'  => $user->id,
@@ -82,14 +66,9 @@ class CreateAccountService
         ]);
     }
 
-    /**
-     * Assign package to student
-     */
     protected function assignPackage(User $user, array $data): void
     {
-        if (!isset($data['package_id'])) {
-            return;
-        }
+        if (!isset($data['package_id'])) return;
 
         StudentPackage::create([
             'user_id'    => $user->id,
@@ -102,9 +81,6 @@ class CreateAccountService
         ]);
     }
 
-    /**
-     * Get package duration safely
-     */
     protected function getPackageDuration(int $packageId): ?int
     {
         return Packages::where('id', $packageId)

@@ -6,7 +6,6 @@ use App\Http\Requests\BaseRequest\BaseRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 use App\Models\User;
-use App\Models\Package;
 use App\Models\Packages;
 
 class CreateAccountRequest extends BaseRequest
@@ -56,12 +55,12 @@ class CreateAccountRequest extends BaseRequest
             // ======================
             // Assignment (School / Teacher)
             // ======================
-            'assigned_type' => [
+            'directorate_affiliation' => [
                 Rule::requiredIf(fn() => $this->role === 'student' && in_array($this->student_type, ['school', 'teacher'])),
                 Rule::in(['school', 'teacher']),
             ],
 
-            'assigned_id' => [
+            'school_id' => [
                 Rule::requiredIf(fn() => $this->role === 'student' && in_array($this->student_type, ['school', 'teacher'])),
                 'integer',
             ],
@@ -89,29 +88,23 @@ class CreateAccountRequest extends BaseRequest
         ];
     }
 
-    /**
-     * Business-level validation
-     */
     public function withValidator($validator): void
     {
         $validator->after(function ($validator) {
 
-            if ($this->role !== 'student') {
-                return;
-            }
+            if ($this->role !== 'student') return;
 
             // ======================
             // Validate Assigned Account
             // ======================
             if (in_array($this->student_type, ['school', 'teacher'])) {
-
-                $exists = User::where('id', $this->assigned_id)
-                    ->where('role', $this->assigned_type)
+                $exists = User::where('id', $this->school_id)
+                    ->where('role', $this->directorate_affiliation)
                     ->exists();
 
-                if (! $exists) {
+                if (!$exists) {
                     $validator->errors()->add(
-                        'assigned_id',
+                        'school_id',
                         'Assigned account does not match the selected type.'
                     );
                 }
@@ -124,13 +117,13 @@ class CreateAccountRequest extends BaseRequest
                 ->where(function ($q) {
                     $q->where('assign_type', 'system')
                         ->orWhere(function ($q) {
-                            $q->where('assign_type', $this->assigned_type)
-                                ->where('assignable_id', $this->assigned_id);
+                            $q->where('assign_type', $this->directorate_affiliation)
+                                ->where('assignable_id', $this->school_id);
                         });
                 })
                 ->exists();
 
-            if (! $validPackage) {
+            if (!$validPackage) {
                 $validator->errors()->add(
                     'package_id',
                     'Selected package is not available for this account.'
@@ -139,9 +132,6 @@ class CreateAccountRequest extends BaseRequest
         });
     }
 
-    /**
-     * Custom messages
-     */
     public function messages(): array
     {
         return [
@@ -167,11 +157,11 @@ class CreateAccountRequest extends BaseRequest
             'grade_id.required' => 'Grade is required for students.',
             'grade_id.exists'   => 'Selected grade does not exist.',
 
-            'assigned_type.required' => 'Assigned type is required.',
-            'assigned_type.in'       => 'Assigned type must be school or teacher.',
+            'directorate_affiliation.required' => 'Directorate affiliation is required.',
+            'directorate_affiliation.in'       => 'Directorate affiliation must be school or teacher.',
 
-            'assigned_id.required' => 'Assigned account is required.',
-            'assigned_id.integer'  => 'Assigned account must be valid.',
+            'school_id.required' => 'Assigned account is required.',
+            'school_id.integer'  => 'Assigned account must be valid.',
 
             'package_id.required' => 'Package is required.',
             'package_id.integer'  => 'Package must be valid.',
