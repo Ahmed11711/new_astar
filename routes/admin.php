@@ -53,13 +53,20 @@ Route::prefix('v1')->group(function () {
  Route::apiResource('packages', PackagesController::class)->names('packages');
 
 
-Route::middleware(RoleToken::class)->defaults('roles', ['admin', 'data_entry'])->group(function () {
-      Route::apiResource('exams', ExamPaperController::class)->names('exam_paper')
-            ->except(['store', 'show']);
-      Route::post('exams', [UpdateExamPaperController::class, 'store']);
+Route::group([
+    'middleware' => RoleToken::class,
+    'roles' => ['admin'],
+], function () {
+
+    Route::apiResource('exams', ExamPaperController::class)
+        ->names('exam_paper')
+        ->except(['store', 'show']);
+
+    Route::post('exams', [UpdateExamPaperController::class, 'store']);
     Route::get('exams/{id}', [UpdateExamPaperController::class, 'show']);
 
-    });
+});
+
 
 
 });
