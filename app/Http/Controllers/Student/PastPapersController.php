@@ -12,7 +12,6 @@ class PastPapersController extends Controller
 
     public function index()
     {
-        return ExamPaper::get();
         $papers = paper::with('examPaper')->get();
         return $papers;
     }
