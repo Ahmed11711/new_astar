@@ -25,13 +25,13 @@ Route::prefix('v1/')->group(function () {
 });
 
 
-// Route::get('run-migrate', function () {
-//  Artisan::call('migrate', ['--force' => true]);
+Route::get('run-migrate', function () {
+    Artisan::call('migrate', ['--force' => true]);
 
-//  return response()->json([
-//   'code' => Artisan::output()
-//  ]);
-// });
+    return response()->json([
+        'code' => Artisan::output()
+    ]);
+});
 Route::get('/generate-jwt-secret', function () {
     // ينفذ الأمر
     // Artisan::call('jwt:secret');
