@@ -113,22 +113,22 @@ class CreateAccountRequest extends BaseRequest
             // ======================
             // Validate Package Ownership
             // ======================
-            // $validPackage = Packages::where('id', $this->package_id)
-            //     ->where(function ($q) {
-            //         $q->where('assign_type', 'system')
-            //             ->orWhere(function ($q) {
-            //                 $q->where('assign_type', $this->directorate_affiliation)
-            //                     ->where('assignable_id', $this->school_id);
-            //             });
-            //     })
-            //     ->exists();
+            $validPackage = Packages::where('id', $this->package_id)
+                ->where(function ($q) {
+                    $q->where('assign_type', 'system')
+                        ->orWhere(function ($q) {
+                            $q->where('assign_type', $this->directorate_affiliation)
+                                ->where('assignable_id', $this->school_id);
+                        });
+                })
+                ->exists();
 
-            // if (!$validPackage) {
-            //     $validator->errors()->add(
-            //         'package_id',
-            //         'Selected package is not available for this account.'
-            //     );
-            // }
+            if (!$validPackage) {
+                $validator->errors()->add(
+                    'package_id',
+                    'Selected package is not available for this account.'
+                );
+            }
         });
     }
 
