@@ -64,6 +64,9 @@ Route::group([
 
     Route::post('exams', [UpdateExamPaperController::class, 'store']);
     Route::get('exams/{id}', [UpdateExamPaperController::class, 'show']);
+    Route::get('test',function(){
+        return 55;
+    });
 
 });
 
