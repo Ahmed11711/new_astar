@@ -16,7 +16,7 @@ class ExamPaperService
             $paper = ExamPaper::create([
                 'subject_id'       => $data['subject_id'],
                 'grade_id'         => $data['grade_id'],
-                'paper_id'         => $data['paper_type'] ?? null,
+                'paper_id'         => $data['paper_id'] ?? null,
                 'title'            => $data['title'],
                 'paper_label'      => $data['paper_label'] ?? null,
                 'year'             => $data['year'] ?? null,
