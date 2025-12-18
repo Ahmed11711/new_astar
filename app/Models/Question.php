@@ -31,4 +31,10 @@ class Question extends Model
     {
         return $this->hasMany(QuestionImage::class, 'question_id');
     }
+
+    public function lastAttempt()
+    {
+        return $this->hasOne(StudentAttamp::class, 'question_id')
+            ->latest('attempt_id');
+    }
 }
