@@ -1,7 +1,10 @@
 <?php
 
 namespace App\Http\Requests\Admin\User;
+
 use App\Http\Requests\BaseRequest\BaseRequest;
+use Illuminate\Support\Facades\Hash;
+
 class UserStoreRequest extends BaseRequest
 {
     public function authorize(): bool
@@ -15,7 +18,7 @@ class UserStoreRequest extends BaseRequest
             'username' => 'required|string|max:255|unique:users,username',
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'email' => 'required|string|max:255|unique:users,email',
+            'email' => 'required|email|max:255|unique:users,email',
             'password' => 'required|string|max:255',
             'phone' => 'nullable|string|max:255',
             'is_email_verified' => 'required|integer',
@@ -23,5 +26,12 @@ class UserStoreRequest extends BaseRequest
             'role' => 'required|in:admin,school,teacher,student,data_entry',
             'is_active' => 'required|integer',
         ];
+    }
+
+    protected function passedValidation()
+    {
+        $this->merge([
+            'password' => Hash::make($this->password),
+        ]);
     }
 }
