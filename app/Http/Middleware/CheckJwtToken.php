@@ -22,7 +22,6 @@ class CheckJwtToken
                     'message' => 'User not found'
                 ], 404);
             }
-
         } catch (TokenExpiredException $e) {
             return response()->json([
                 'success' => false,

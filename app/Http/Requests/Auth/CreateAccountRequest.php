@@ -16,11 +16,11 @@ class CreateAccountRequest extends BaseRequest
             // ======================
             // Basic User Info
             // ======================
-            'username'   => ['required', 'string', 'max:255', 'unique:users,username'],
+            'username'   => ['required', 'string', 'max:255'],
             'first_name' => ['required', 'string', 'max:255'],
             'last_name'  => ['required', 'string', 'max:255'],
             'email'      => ['required', 'email', 'unique:users,email'],
-            'phone'      => ['nullable', 'string', 'max:20'],
+            'phone'      => ['required', 'string', 'max:20'],
 
             // ======================
             // Role

@@ -39,11 +39,11 @@ class User extends Authenticatable implements JWTSubject
     {
         return [
             'user_id' => $this->id,
-            'name' => $this->name,
-            // 'grade_id' => $this->grades()->first()?->id ?? null,
-
+            'role'    => $this->role,
+            'name'    => $this->first_name . ' ' . $this->last_name,
         ];
     }
+
     public function grades()
     {
         return $this->belongsToMany(Grade::class, 'user_grades', 'user_id', 'grade_id');
@@ -79,5 +79,15 @@ class User extends Authenticatable implements JWTSubject
     public function scopeTeachersAndStudents($query)
     {
         return $query->whereIn('role', ['school', 'teacher']);
+    }
+
+    public function subjects()
+    {
+        return $this->belongsToMany(
+            Subject::class,
+            'student_subject',
+            'student_id',
+            'subject_id'
+        );
     }
 }

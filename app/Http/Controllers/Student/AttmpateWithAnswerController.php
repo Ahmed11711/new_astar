@@ -14,18 +14,28 @@ class AttmpateWithAnswerController extends Controller
 
     public function createAttamepate(CreateAttmpateRequest $request)
     {
-        $data = $request->validated();
         $userId = $request->user_id;
-        $gradeId = $request->grade_id;
-        $attemptData = [
-            'user_id' => $userId,
-            'exam_id' => $data['exam_id'],
-            'paper_id' => $data['paper_id'],
-            'grade_id' => $gradeId ?? 1,
+        $data = $request->validated();
+
+        $activeAttempt = StudentAttamp::query()
+            ->where('user_id', $userId)
+            ->where('exam_id', $data['exam_id'])
+            // ->whereNull('finished_at')
+            ->first();
+
+        if ($activeAttempt) {
+            return $this->successResponse($activeAttempt, "Student already has an active attempt for this exam");
+        }
+
+        $attempt = StudentAttamp::create([
+            'user_id'    => $userId,
+            'exam_id'    => $data['exam_id'],
+            'paper_id'   => $data['paper_id'],
+            'grade_id'   => $data['grade_id'] ?? 1,
             'started_at' => now(),
-            'is_saved' => false,
-        ];
-        $attempt = StudentAttamp::create($attemptData);
+            'is_saved'   => false,
+        ]);
+
         return $this->successResponse($attempt);
     }
 }

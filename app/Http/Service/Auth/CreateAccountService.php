@@ -3,51 +3,53 @@
 namespace App\Http\Service\Auth;
 
 use App\Models\Packages;
-use App\Models\User;
 use App\Models\StudentAssignment;
 use App\Models\StudentPackage;
+use App\Models\StudentSubject;
+use App\Models\User;
 use App\Models\UserGrade;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class CreateAccountService
 {
+    protected ?int $packageDuration = null;
+
     public function execute(array $data): User
     {
-        return DB::transaction(function () use ($data) {
-
-            // ======================
-            // Create User
-            // ======================
-            $user = User::create([
-                'username'     => $data['username'],
-                'first_name'   => $data['first_name'],
-                'last_name'    => $data['last_name'],
-                'email'        => $data['email'],
-                'phone'        => $data['phone'],
-                'role'         => $data['role'],
-                'student_type' => $data['student_type'] ?? null,
-                'is_active'    => true,
-                'password'     => Hash::make($data['password']),
-            ]);
-
-            if ($user->role !== 'student') return $user;
-
-            // ======================
-            // Student related data
-            // ======================
-            $this->assignStudent($user, $data);
-            $this->assignGrade($user, $data);
-            $this->assignPackage($user, $data);
-
-            return $user;
-        });
+        return DB::transaction(fn() => $this->createUserWithRelations($data));
     }
 
-    protected function assignStudent(User $user, array $data): void
+    protected function createUserWithRelations(array $data): User
     {
-        if (!isset($data['school_id'], $data['directorate_affiliation'])) return;
+        $user = User::create([
+            'username'     => $data['username'],
+            'first_name'   => $data['first_name'],
+            'last_name'    => $data['last_name'],
+            'email'        => $data['email'],
+            'phone'        => $data['phone'],
+            'role'         => $data['role'],
+            'student_type' => $data['student_type'] ?? null,
+            'is_active'    => true,
+            'password'     => Hash::make($data['password']),
+        ]);
+
+        if ($user->role !== 'student') {
+            return $user;
+        }
+
+        $this->assignStudentAssignment($user, $data);
+        $this->assignGrade($user, $data);
+        $this->assignPackage($user, $data);
+        $this->assignSubjects($user, $data);
+
+        return $user;
+    }
+
+    protected function assignStudentAssignment(User $user, array $data): void
+    {
+        if (empty($data['school_id']) || empty($data['directorate_affiliation'])) return;
 
         StudentAssignment::create([
             'student_id'    => $user->id,
@@ -58,7 +60,7 @@ class CreateAccountService
 
     protected function assignGrade(User $user, array $data): void
     {
-        if (!isset($data['grade_id'])) return;
+        if (empty($data['grade_id'])) return;
 
         UserGrade::create([
             'user_id'  => $user->id,
@@ -68,22 +70,36 @@ class CreateAccountService
 
     protected function assignPackage(User $user, array $data): void
     {
-        if (!isset($data['package_id'])) return;
+        if (empty($data['package_id'])) return;
+
+        $this->packageDuration ??= Packages::where('id', $data['package_id'])
+            ->value('duration_days');
 
         StudentPackage::create([
-            'student_id'    => $user->id,
+            'student_id' => $user->id,
             'package_id' => $data['package_id'],
-            'starts_at'  => Carbon::now(),
-            'ends_at'    => Carbon::now()->addDays(
-                optional($this->getPackageDuration($data['package_id'])) ?? 30
-            ),
-            'active'  => true,
+            'starts_at'  => now(),
+            'ends_at'    => now()->addDays($this->packageDuration ?? 30),
+            'active'     => true,
         ]);
     }
 
-    protected function getPackageDuration(int $packageId): ?int
+    protected function assignSubjects(User $user, array $data): void
     {
-        return Packages::where('id', $packageId)
-            ->value('duration_days');
+        if (empty($data['subject_ids'])) return;
+
+        $now = now();
+
+        StudentSubject::insert(
+            collect($data['subject_ids'])
+                ->unique()
+                ->map(fn($id) => [
+                    'student_id' => $user->id,
+                    'subject_id' => $id,
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ])
+                ->all()
+        );
     }
 }

@@ -13,10 +13,37 @@ class PastPapersController extends Controller
     public function index(Request $request)
     {
         $userId = $request->user_id;
-        $userName = $request->user_grade;
-        $papers = paper::with('examPaper')->get();
-        return $papers;
+        $role   = $request->user_role;
+
+        if ($role !== 'student') {
+            return response()->json([
+                'success' => false,
+                'message' => 'Only students can access exam papers'
+            ], 403);
+        }
+
+        $gradeId    = $request->student_grade_id;
+        $subjectIds = $request->student_subject_ids;
+
+        $papers = ExamPaper::query()
+            ->where('grade_id', $gradeId)
+            ->whereIn('subject_id', $subjectIds)
+            ->with([
+                'subject:id,name',
+                'studentAttempt' => function ($query) use ($userId) {
+                    $query->where('user_id', $userId);
+                }
+            ])
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'data'    => $papers
+        ]);
     }
+
+
+
 
     public function show(Request $request, $id)
     {
