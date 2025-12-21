@@ -41,4 +41,9 @@ class Question extends Model
     {
         return $this->hasOne(answer::class, 'question_id');
     }
+    // Question.php
+    public function answers()
+    {
+        return $this->hasMany(answer::class, 'question_id');
+    }
 }
