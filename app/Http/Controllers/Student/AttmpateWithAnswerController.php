@@ -5,12 +5,17 @@ namespace App\Http\Controllers\Student;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Student\Attmpate\CreateAttmpateRequest;
 use App\Models\StudentAttamp;
+use App\Repositories\Attmpate\AttmpateRepositoryInterface;
 use App\Traits\ApiResponseTrait;
 use Illuminate\Http\Request;
 
 class AttmpateWithAnswerController extends Controller
 {
     use ApiResponseTrait;
+
+    public function __construct(public AttmpateRepositoryInterface $attemptRepo) {}
+
+
 
     public function createAttamepate(CreateAttmpateRequest $request)
     {

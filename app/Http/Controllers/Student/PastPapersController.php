@@ -54,7 +54,8 @@ class PastPapersController extends Controller
             'questions.options',
             'questions.audios',
             'questions.images',
-            'questions.lastAttempt'
+            'questions.asnwer',
+            // 'questions.lastAttempt'
         ])->findOrFail($question_id);
 
         return $examPaper;

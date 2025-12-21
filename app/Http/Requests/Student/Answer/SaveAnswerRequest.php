@@ -11,6 +11,7 @@ class SaveAnswerRequest extends BaseRequest
     {
         return [
             'attempt_id' => 'required',
+            'is_saved' => 'required|boolean',
             'answers' => 'required|array|min:1',
             'answers.*.question_id'    => 'nullable|integer|exists:questions,id',
             'answers.*.question_index' => 'nullable|integer|min:0',

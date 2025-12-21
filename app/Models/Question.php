@@ -11,7 +11,6 @@ class Question extends Model
     ];
 
     /**
-     * خيارات السؤال (MCQ مثلاً)
      */
     public function options()
     {
@@ -36,5 +35,10 @@ class Question extends Model
     {
         return $this->hasOne(StudentAttamp::class, 'question_id')
             ->latest('attempt_id');
+    }
+
+    public function asnwer()
+    {
+        return $this->hasOne(answer::class, 'question_id');
     }
 }
