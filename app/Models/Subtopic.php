@@ -12,5 +12,8 @@ class Subtopic extends BaseModel
     {
         return $this->belongsTo(Topic::class, 'topic_id');
     }
-
+    public function questions()
+    {
+        return $this->hasMany(Question::class, 'subtopics_id');
+    }
 }

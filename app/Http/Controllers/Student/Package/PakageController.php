@@ -53,7 +53,7 @@ class PakageController extends Controller
         $userId = $request->user_id;
         $data = $request->validated();
 
-        $data['user_id'] = $userId;
+        $data['student_id'] = $userId;
         $data['starts_at'] = now();
 
         $studentPackage = StudentPackage::create($data);

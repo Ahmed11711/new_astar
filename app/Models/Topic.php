@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Topic extends BaseModel
 {
@@ -16,5 +17,15 @@ class Topic extends BaseModel
     public function questions()
     {
         return $this->hasMany(Question::class);
+    }
+
+    public function subTopics()
+    {
+        return $this->hasMany(SubTopic::class, 'topic_id');
+    }
+
+    public function subTopic()
+    {
+        return $this->hasMany(Subtopic::class, 'topic_id');
     }
 }

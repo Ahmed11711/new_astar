@@ -18,9 +18,10 @@ class AiChateRequest extends BaseRequest
     {
         return [
             'role'      => 'required|in:user,assistant',
-            'title'     => 'nullable|string',
+            'title'     => 'required|string',
             'content'   => 'required|string',
             'parent_id' => 'nullable|exists:chat_ais,id',
+            'rating'    => 'nullable|in:like,dislike', // <--- هنا
         ];
     }
 }

@@ -20,9 +20,11 @@ class AiChateController extends Controller
             "chat_ai_user_{$userId}",
             now()->addMinutes(5),
             function () use ($userId) {
-                return ChatAi::where('user_id', $userId)
-                    ->orderBy('id')
+                $parentChats = ChatAi::where('user_id', $userId)
+                    ->whereNull('parent_id')
                     ->get();
+
+                return response()->json($parentChats);
             }
         );
     }
@@ -35,16 +37,16 @@ class AiChateController extends Controller
         $data = $request->validated();
         $userId = $request->user_id;
 
-        $data = $request->$data['user_id'] = $userId;
+        // صح، ضيف user_id للمصفوفة
+        $data['user_id'] = $userId;
 
-        $chat = ChatAi::create($data);
+        $chat = chatAi::create($data);
 
         // clear cache
         Cache::forget("chat_ai_user_" . $userId);
 
-        return $this->successResponsePaginate($chat);
+        return $this->successResponse($chat);
     }
-
     /**
      * Show single message
      */
@@ -54,6 +56,7 @@ class AiChateController extends Controller
 
         return ChatAi::where('id', $id)
             ->where('user_id', $userId)
+            ->with('replies')
             ->firstOrFail();
     }
 
