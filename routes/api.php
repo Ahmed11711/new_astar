@@ -5,7 +5,9 @@ use App\Http\Controllers\Api\HelperForFront\FrontAuthController;
 use App\Http\Controllers\Auth\CreateAccountController;
 use App\Http\Middleware\CheckJwtToken;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -17,6 +19,14 @@ Route::get('run-migrate', function () {
         'code' => Artisan::output()
     ]);
 });
+Route::get('delete-student-attempts', function () {
+    DB::table('student_attempts')->truncate();
+
+    return response()->json([
+        'message' => 'All student attempts deleted successfully.'
+    ]);
+});
+
 Route::prefix('v1/')->group(function () {
 
     Route::prefix('auth/')->group(function () {

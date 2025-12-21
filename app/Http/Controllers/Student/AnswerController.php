@@ -4,17 +4,18 @@ namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Student\Answer\SaveAnswerRequest;
-use App\Models\answer;
+use App\Models\Answer;
 use App\Models\StudentAttamp;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class AnswerController extends Controller
 {
     public function saveAnswersOptimized(SaveAnswerRequest $request)
     {
+        $userId = $request->user_id;
+
         $attempt = StudentAttamp::where('id', $request->attempt_id)
-            ->where('user_id', $request->user_id)
+            ->where('user_id', $userId)
             ->first();
 
         if (!$attempt) {
@@ -25,9 +26,10 @@ class AnswerController extends Controller
 
         $answersData = $request->input('answers', []);
 
-        $upsertData = collect($answersData)->map(function ($a) use ($attempt) {
+        $upsertData = collect($answersData)->map(function ($a) use ($attempt, $userId) {
             return [
                 'attempt_id'     => $attempt->id,
+                'user_id'        => $userId,
                 'question_id'    => $a['question_id'],
                 'question_index' => $a['question_index'],
                 'response'       => json_encode($a['response']),
@@ -40,7 +42,7 @@ class AnswerController extends Controller
         DB::transaction(function () use ($upsertData, $attempt, $request) {
             Answer::upsert(
                 $upsertData,
-                ['attempt_id', 'question_id', 'question_index'],
+                ['attempt_id', 'question_id', 'question_index', 'user_id'],
                 ['response', 'is_flagged', 'updated_at']
             );
 
