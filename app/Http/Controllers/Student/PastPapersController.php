@@ -15,12 +15,7 @@ class PastPapersController extends Controller
         $userId = $request->user_id;
         $role   = $request->user_role;
 
-        if ($role !== 'student') {
-            return response()->json([
-                'success' => false,
-                'message' => 'Only students can access exam papers'
-            ], 403);
-        }
+
 
         $gradeId    = $request->student_grade_id;
         $subjectIds = $request->student_subject_ids;
@@ -48,15 +43,18 @@ class PastPapersController extends Controller
     public function show(Request $request, $id)
     {
         $userId = $request->user_id;
-        $question_id = $id;
 
         $examPaper = ExamPaper::with([
             'questions.options',
             'questions.audios',
             'questions.images',
-            'questions.asnwer',
-            // 'questions.lastAttempt'
-        ])->findOrFail($question_id);
+            'studentAttempt' => function ($query) use ($userId) {
+                $query->where('user_id', $userId);
+            },
+            'questions.asnwer' => function ($query) use ($userId) {
+                $query->where('user_id', $userId);
+            },
+        ])->findOrFail($id);
 
         return $examPaper;
     }
