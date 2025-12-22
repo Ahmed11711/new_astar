@@ -46,4 +46,10 @@ class Question extends Model
     {
         return $this->hasMany(answer::class, 'question_id');
     }
+
+    public function lastAnswer()
+    {
+        return $this->hasOne(answer::class, 'question_id')
+            ->latest('created_at'); // آخر إجابة
+    }
 }
