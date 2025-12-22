@@ -16,6 +16,7 @@ class TopicWiseRequest extends BaseRequest
             'subject_id'  => 'required|exists:subjects,id',
             'topic_id'    => 'nullable|exists:topics,id',
             'subtopic_id' => 'nullable|exists:subtopics,id',
+            'count' => 'required|integer'
         ];
     }
 }

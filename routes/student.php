@@ -44,7 +44,7 @@ Route::prefix('v1/student')->group(function () {
         Route::get('attamepate', [AttmpateWithAnswerController::class, 'index']);
         Route::post('answers', [AnswerController::class, 'saveAnswersOptimized']);
 
-        Route::get('topicwise', [TopicWiseController::class, 'index']);
+        Route::post('topicwise', [TopicWiseController::class, 'index']);
 
 
         // topic- wise
