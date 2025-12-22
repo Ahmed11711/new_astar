@@ -26,7 +26,6 @@ class AttmpateWithAnswerController extends Controller
             ->where('user_id', $userId)
             ->where('exam_id', $data['exam_id'])
             ->where('is_saved', 0)
-            // ->whereNull('finished_at')
             ->first();
 
         if ($activeAttempt) {

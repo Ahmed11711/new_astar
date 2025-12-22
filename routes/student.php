@@ -13,12 +13,6 @@ use Illuminate\Support\Facades\Route;
 
 
 
-
-
-
-
-
-
 Route::prefix('v1/student')->group(function () {
 
     Route::get('otp', [otpcontroller::class, 'sendOtp']);
@@ -27,8 +21,6 @@ Route::prefix('v1/student')->group(function () {
         'middleware' => RoleToken::class,
         'roles' => ['student'],
     ], function () {
-
-
 
         Route::apiResource('chat-ai', AiChateController::class);
         Route::get("my-package", [PakageController::class, 'getPackageByAccount']);
