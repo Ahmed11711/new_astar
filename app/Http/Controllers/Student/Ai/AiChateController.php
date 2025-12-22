@@ -20,7 +20,7 @@ class AiChateController extends Controller
             "chat_ai_user_{$userId}",
             now()->addMinutes(5),
             function () use ($userId) {
-                $parentChats = ChatAi::where('user_id', $userId)
+                $parentChats = chatAi::where('user_id', $userId)
                     ->whereNull('parent_id')
                     ->get();
 
@@ -54,7 +54,7 @@ class AiChateController extends Controller
     {
         $userId = $request->user_id;
 
-        return ChatAi::where('id', $id)
+        return chatAi::where('id', $id)
             ->where('user_id', $userId)
             ->with('replies')
             ->firstOrFail();
@@ -68,7 +68,7 @@ class AiChateController extends Controller
         $userId = $request->user_id;
 
 
-        $chat = ChatAi::where('id', $id)
+        $chat = chatAi::where('id', $id)
             ->where('user_id', $userId)
             ->firstOrFail();
 
@@ -89,7 +89,7 @@ class AiChateController extends Controller
     {
         $userId = $request->user_id;
 
-        $chat = ChatAi::where('id', $id)
+        $chat = chatAi::where('id', $id)
             ->where('user_id', $userId)
             ->firstOrFail();
 
