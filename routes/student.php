@@ -7,8 +7,10 @@ use App\Http\Controllers\Student\AttmpateWithAnswerController;
 use App\Http\Controllers\Student\Dashboard\DashboardController;
 use App\Http\Controllers\Student\Package\PakageController;
 use App\Http\Controllers\Student\PastPapersController;
+use App\Http\Controllers\Student\TopicWise\TopicWiseController;
 use App\Http\Middleware\RoleToken;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -36,8 +38,16 @@ Route::prefix('v1/student')->group(function () {
 
         Route::get('past-papers', [PastPapersController::class, 'index']);
         Route::get('past-paper/{examPaper}', [PastPapersController::class, 'show']);
+        Route::get('past-paper/attempt/{attemptId}', [PastPapersController::class, 'showByAttempt']);
+
         Route::post('attamepate', [AttmpateWithAnswerController::class, 'createAttamepate']);
         Route::get('attamepate', [AttmpateWithAnswerController::class, 'index']);
         Route::post('answers', [AnswerController::class, 'saveAnswersOptimized']);
+
+        Route::get('topicwise', [TopicWiseController::class, 'index']);
+
+
+        // topic- wise
+
     });
 });

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Student;
 use App\Http\Controllers\Controller;
 use App\Models\ExamPaper;
 use App\Models\paper;
+use App\Models\StudentAttamp;
 use Illuminate\Http\Request;
 
 class PastPapersController extends Controller
@@ -14,15 +15,8 @@ class PastPapersController extends Controller
     {
         $userId = $request->user_id;
         $role   = $request->user_role;
-
-
-
         $gradeId    = $request->student_grade_id;
         $subjectIds = $request->student_subject_ids;
-
-
-
-
         $papers = ExamPaper::query()
             ->where('grade_id', $gradeId)
             ->whereIn('subject_id', $subjectIds)
@@ -40,13 +34,9 @@ class PastPapersController extends Controller
         ]);
     }
 
-
-
-
     public function show(Request $request, $id)
     {
         $userId = $request->user_id;
-
         $examPaper = ExamPaper::with([
             'questions.options',
             'questions.audios',
@@ -60,5 +50,24 @@ class PastPapersController extends Controller
         ])->findOrFail($id);
 
         return $examPaper;
+    }
+
+    public function showByAttempt(Request $request, $attemptId)
+    {
+
+        $userId = $request->user_id;
+
+
+        // Load Attempt + ExamPaper + Questions + Options/Media + Student Answers
+        $attempt = StudentAttamp::where('user_id', $userId)->with([
+            'examPaper.questions.options',
+            'examPaper.questions.audios',
+            'examPaper.questions.images',
+            'examPaper.questions.answers' => function ($query) use ($userId) {
+                $query->where('user_id', $userId);
+            },
+        ])->findOrFail($attemptId);
+
+        return response()->json($attempt);
     }
 }
