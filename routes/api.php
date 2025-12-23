@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('run-migrate', function () {
     //
-    Artisan::call('migrate:fresh', ['--force' => true]);
+    Artisan::call('migrate:refresh', ['--force' => true]);
     Artisan::call('db:seed', [
         '--force' => true,
     ]);
