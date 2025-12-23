@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Requests\Admin\FeaturePackage;
+
 use App\Http\Requests\BaseRequest\BaseRequest;
+
 class FeaturePackageUpdateRequest extends BaseRequest
 {
     public function authorize(): bool
@@ -15,6 +17,8 @@ class FeaturePackageUpdateRequest extends BaseRequest
             'package_id' => 'sometimes|required|integer|exists:packages,id',
             'feature_id' => 'sometimes|required|integer|exists:features,id',
             'value' => 'nullable|sometimes|string|max:255',
+            'lable' => 'sometimes|string|max:255',
+
         ];
     }
 }

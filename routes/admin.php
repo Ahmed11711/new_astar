@@ -37,6 +37,8 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->group(function () {
 
     Route::get('dashboard', [DashboardController::class, 'index']);
+    Route::apiResource('users', UserController::class)->names('user');
+
     Route::apiResource('schools', schoolController::class)->names('school');
     Route::apiResource('grades', gradeController::class)->names('grade');
     Route::apiResource('subjects', SubjectController::class)->names('subject');
@@ -46,7 +48,6 @@ Route::prefix('v1')->group(function () {
     Route::apiResource('blogs', BlogController::class)->names('blog');
     Route::apiResource('student_registrations', StudentRegistrationsController::class)->names('student_registrations');
     Route::apiResource('success-stories', successStoriesController::class)->names('success_stories');
-    Route::apiResource('users', UserController::class)->names('user');
     // Route::get('examss', [DataEntryController::class, 'index']);
     Route::apiResource('papers', paperController::class)->names('paper');
     Route::apiResource('features', FeatureController::class)->names('feature');
