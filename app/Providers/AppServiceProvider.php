@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Repositories\trusted\trustedRepositoryInterface;
+use App\Repositories\trusted\trustedRepository;
+
 use App\Repositories\SocialMedia\SocialMediaRepositoryInterface;
 use App\Repositories\SocialMedia\SocialMediaRepository;
 
@@ -82,6 +85,7 @@ class AppServiceProvider extends ServiceProvider
     $this->app->bind(ExamPaperRepositoryInterface::class, ExamPaperRepository::class);
     $this->app->bind(AttmpateRepositoryInterface::class, AttmpateRepository::class);
         $this->app->bind(SocialMediaRepositoryInterface::class, SocialMediaRepository::class);
+        $this->app->bind(trustedRepositoryInterface::class, trustedRepository::class);
 }
 
   /**
