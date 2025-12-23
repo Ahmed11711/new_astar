@@ -11,17 +11,25 @@ use Illuminate\Support\Facades\Route;
 
 
 
+
 Route::get('run-migratessgit', function () {
-    //
+    // Disable foreign key checks
+    DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
+    // Refresh migrations
     Artisan::call('migrate:refresh', ['--force' => true]);
-    Artisan::call('db:seed', [
-        '--force' => true,
-    ]);
+
+    // Run seeds
+    Artisan::call('db:seed', ['--force' => true]);
+
+    // Enable foreign key checks
+    DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
     return response()->json([
         'code' => Artisan::output()
     ]);
 });
+
 Route::get('delete-student-attempts', function () {
     DB::table('student_attempts')->truncate();
 
