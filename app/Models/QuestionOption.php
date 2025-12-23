@@ -6,5 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class QuestionOption extends Model
 {
-    //
+    protected $casts = [
+        'is_correct' => 'boolean',
+    ];
 }
