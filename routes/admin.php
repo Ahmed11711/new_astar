@@ -29,6 +29,7 @@ use App\Http\Middleware\CheckJwtTokenByAdmin;
 use App\Http\Middleware\RoleToken;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\SocialMedia\SocialMediaController;
 
 
 // Route::prefix('admin/v1')->middleware(CheckJwtTokenByAdmin::class)->group(function () {});
@@ -68,6 +69,7 @@ Route::prefix('v1')->group(function () {
         Route::get('exams/{id}', [UpdateExamPaperController::class, 'show']);
         Route::get('test', function () {
             return 55;
-        });
+            Route::apiResource('social_media', SocialMediaController::class)->names('social_media');
+});
     });
 });

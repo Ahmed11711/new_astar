@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Repositories\SocialMedia\SocialMediaRepositoryInterface;
+use App\Repositories\SocialMedia\SocialMediaRepository;
+
 use App\Repositories\Attmpate\AttmpateRepository;
 use App\Repositories\Attmpate\AttmpateRepositoryInterface;
 use App\Repositories\ExamPaper\ExamPaperRepositoryInterface;
@@ -60,9 +63,8 @@ class AppServiceProvider extends ServiceProvider
   /**
    * Register any application services.
    */
-  public function register(): void
-  {
-    //
+  public function register(): void {
+//
     $this->app->bind(schoolRepositoryInterface::class, schoolRepository::class);
     $this->app->bind(gradeRepositoryInterface::class, gradeRepository::class);
     $this->app->bind(SubjectRepositoryInterface::class, SubjectRepository::class);
@@ -79,7 +81,8 @@ class AppServiceProvider extends ServiceProvider
     $this->app->bind(PackagesRepositoryInterface::class, PackagesRepository::class);
     $this->app->bind(ExamPaperRepositoryInterface::class, ExamPaperRepository::class);
     $this->app->bind(AttmpateRepositoryInterface::class, AttmpateRepository::class);
-  }
+        $this->app->bind(SocialMediaRepositoryInterface::class, SocialMediaRepository::class);
+}
 
   /**
    * Bootstrap any application services.

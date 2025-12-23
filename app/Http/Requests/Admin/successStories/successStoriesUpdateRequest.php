@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Requests\Admin\successStories;
+
 use App\Http\Requests\BaseRequest\BaseRequest;
+
 class successStoriesUpdateRequest extends BaseRequest
 {
     public function authorize(): bool
@@ -14,7 +16,7 @@ class successStoriesUpdateRequest extends BaseRequest
         return [
             'content' => 'sometimes|required|string',
             'title' => 'sometimes|required|string|max:255',
-            'img' => 'sometimes|required|string|max:255|file|max:2048',
+            'info' => 'sometimes|required|string|max:255',
         ];
     }
 }

@@ -1,18 +1,17 @@
 <?php
 
-namespace App\Http\Resources\Admin\successStories;
+namespace App\Http\Resources\Admin\SocialMedia;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class successStoriesResource extends JsonResource
+class SocialMediaResource extends JsonResource
 {
     public function toArray($request): array
     {
         return [
             'id' => $this->id,
-            'content' => $this->content,
-            'title' => $this->title,
-            'info' => $this->img,
+            'name' => $this->name,
+            'link' => $this->link,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
