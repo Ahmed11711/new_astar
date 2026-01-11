@@ -36,6 +36,8 @@ class KashierPaymentController extends Controller
             'currency'   => 'EGP',
             'hash'       => $hash,
             'mode'       => 'test',
+            'successUrl' => route('kashier.success'),
+            'failureUrl' => route('kashier.failure'),
         ]);
 
 
