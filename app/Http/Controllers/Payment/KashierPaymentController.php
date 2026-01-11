@@ -36,8 +36,9 @@ class KashierPaymentController extends Controller
             'currency'   => 'EGP',
             'hash'       => $hash,
             'mode'       => 'test',
-            'successUrl' => route('kashier.success'),
-            'failureUrl' => route('kashier.failure'),
+            'successUrl' => 'https://newastarfinsh.zayamrock.com/kashier/success',
+            'failureUrl' => 'https://newastarfinsh.zayamrock.com/kashier/failure',
+
         ]);
 
 
