@@ -67,11 +67,11 @@ Route::get('/generate-jwt-secret', function () {
 });
 
 Route::get('kashier-payment', [KashierPaymentController::class, 'create']);
-Route::get('/kashier/success', [KashierPaymentController::class, 'success'])
-    ->name('kashier.success');
+// Route::get('/kashier/success', [KashierPaymentController::class, 'success'])
+//     ->name('kashier.success');
 
-Route::get('/kashier/failure', [KashierPaymentController::class, 'failure'])
-    ->name('kashier.failure');
+// Route::get('/kashier/failure', [KashierPaymentController::class, 'failure'])
+//     ->name('kashier.failure');
 
 require __DIR__ . '/admin.php';
 require __DIR__ . '/student.php';
