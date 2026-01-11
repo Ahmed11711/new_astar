@@ -53,18 +53,15 @@ class KashierPaymentController extends Controller
     {
         $data = $request->all();
         Log::info('Kashier Payment Success:', $data);
-        return response()->json([
-            'status' => 'success',
-            'data'   => $request->all()
-        ]);
+
+        return view('kashier.success', ['data' => $data]);
     }
+
     public function failure(Request $request)
     {
         $data = $request->all();
-        Log::info('Kashier Payment Success:', $data);
-        return response()->json([
-            'status' => 'success',
-            'data'   => $request->all()
-        ]);
+        Log::info('Kashier Payment Failure:', $data);
+
+        return view('kashier.failure', ['data' => $data]);
     }
 }
