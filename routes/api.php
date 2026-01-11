@@ -3,10 +3,12 @@
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\HelperForFront\FrontAuthController;
 use App\Http\Controllers\Auth\CreateAccountController;
+use App\Http\Controllers\Payment\KashierPaymentController;
 use App\Http\Middleware\CheckJwtToken;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -64,18 +66,6 @@ Route::get('/generate-jwt-secret', function () {
     ]);
 });
 
-// Route::get('run-migrate-refresh', function () {
-//  // Artisan::call('migrate:refresh', [
-//  //  '--force' => true,
-//  // ]);
-
-//  Artisan::call('db:seed', [
-//   '--force' => true,
-//  ]);
-
-//  return response()->json([
-//   'output' => Artisan::output(),
-//  ]);
-// });
+Route::get('kashier-payment', [KashierPaymentController::class, 'create']);;
 require __DIR__ . '/admin.php';
 require __DIR__ . '/student.php';
