@@ -29,17 +29,18 @@ class KashierPaymentController extends Controller
             false
         );
 
-        $paymentUrl = 'https://checkout.kashier.io/?' . http_build_query([
-            'merchantId' => 'MID-41016-213',
-            'orderId'    => 'TEST_' . time(),
-            'amount'     => '100.00',
-            'currency'   => 'EGP',
-            'hash'       => $hash,
-            'mode'       => 'test',
-            'successUrl' => 'https://newastarfinsh.zayamrock.com/kashier/success',
-            'failureUrl' => 'https://newastarfinsh.zayamrock.com/kashier/failure',
+        $successUrl = 'https://newastarfinsh.zayamrock.com/kashier/success';
+        $failureUrl = 'https://newastarfinsh.zayamrock.com/kashier/failure';
 
-        ]);
+        $paymentUrl = 'https://checkout.kashier.io/?merchantId=MID-41016-213'
+            . '&orderId=TEST_' . time()
+            . '&amount=100.00'
+            . '&currency=EGP'
+            . '&hash=' . $hash
+            . '&mode=test'
+            . '&successUrl=' . urlencode($successUrl)
+            . '&failureUrl=' . urlencode($failureUrl);
+
 
 
 
