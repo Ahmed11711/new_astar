@@ -27,8 +27,9 @@ class ExamPaperRequest extends BaseRequest
       'total_marks'       => 'nullable|integer',
       'duration_minutes'  => 'nullable|integer',
       'meta'              => 'nullable|array',
+      'created_by'        => 'nullable',
 
-      // الأسئلة
+      // questions
       'questions'                 => 'required|array',
       'questions.*.question_type' => 'required|string',
       'questions.*.question_string' => 'nullable|string',
@@ -38,7 +39,7 @@ class ExamPaperRequest extends BaseRequest
       'questions.*.topic_id' => 'required|integer|exists:topics,id',
       'questions.*.subtopics_id' => 'required|integer|exists:subtopics,id',
 
-      // الخيارات
+      // questions options
       'questions.*.options'                  => 'array',
       'questions.*.options.*.text'           => 'required_with:questions.*.options|string',
       'questions.*.options.*.is_correct'     => 'boolean',

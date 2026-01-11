@@ -25,6 +25,7 @@ class ExamPaperService
                 'total_marks'      => $data['total_marks'] ?? null,
                 'duration_minutes' => $data['duration_minutes'] ?? null,
                 'meta'             => $data['meta'] ?? [],
+                'created_by'       => $data['created_by'] ?? null,
             ]);
 
             $this->insertQuestions(
