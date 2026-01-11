@@ -25,7 +25,6 @@ class RoleToken
             $role    = $claims->get('role');
             $name    = $claims->get('name');
 
-            // الأساسيات
             $request->merge([
                 'user_id'   => $userId,
                 'user_role' => $role,
