@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Payment;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class KashierPaymentController extends Controller
 {
@@ -42,6 +43,25 @@ class KashierPaymentController extends Controller
         return response()->json([
             'status' => true,
             'url'    => $paymentUrl
+        ]);
+    }
+
+    public function success(Request $request)
+    {
+        $data = $request->all();
+        Log::info('Kashier Payment Success:', $data);
+        return response()->json([
+            'status' => 'success',
+            'data'   => $request->all()
+        ]);
+    }
+    public function failure(Request $request)
+    {
+        $data = $request->all();
+        Log::info('Kashier Payment Success:', $data);
+        return response()->json([
+            'status' => 'success',
+            'data'   => $request->all()
         ]);
     }
 }
