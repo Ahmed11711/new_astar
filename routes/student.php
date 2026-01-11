@@ -41,7 +41,7 @@ Route::prefix('v1/student')->group(function () {
         Route::post('topicwise', [TopicWiseController::class, 'index']);
 
 
-        // My Subjects
+        // My Subject
         Route::get('my-subjects', [MySubjectController::class, 'index']);
     });
 });
