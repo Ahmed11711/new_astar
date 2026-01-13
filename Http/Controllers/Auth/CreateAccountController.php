@@ -19,9 +19,8 @@ class CreateAccountController extends Controller
     ) {
         $result = $service->execute($request->validated());
 
-        $user = $result['user'];
+        $user = $result['user']; //
         $studentPackage = $result['studentPackage'];
-
         if ($studentPackage && $studentPackage->price > 0) {
             $paymentUrl = $payment->createSession(
                 $studentPackage->price,
